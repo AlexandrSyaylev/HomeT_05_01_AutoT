@@ -2,6 +2,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.github.javafaker.Faker;
+import lombok.experimental.UtilityClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -22,35 +23,23 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class AppDeliveryTest {
 
-    public String generateDate(int days) {
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
-
-    private Faker faker;
-
-    @BeforeEach
-    void setUpAll(){
-        faker=new Faker(new Locale("ru"));
-    }
 
     @Test
     public void ShouldSubmitRequest() {
-        String city = faker.address().toString();
-        String name = faker.name().fullName();
-        String phone = faker.phoneNumber().phoneNumber();
-        String dateMeetin = generateDate(3);
+        PersonLoc persona = DataGen.PersonGen.personLocal("ru");
+        String dateMeetin = DataGen.PersonGen.generateDate(3);
         open("http://localhost:9999/");
         $("input[type='text']").setValue("Архангельск");
         $("input[type='tel']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME));
         $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
         $("input[type='tel']").setValue(dateMeetin);
-        $("input[type='text'][name='name']").setValue(name);
-        $("input[name='phone']").setValue(phone);
+        $("input[type='text'][name='name']").setValue(persona.getName());
+        $("input[name='phone']").setValue(persona.getCity());
         $("label[data-test-id='agreement']").click();
         $x("/html/body/div[1]/div/form/fieldset/div[6]/div[2]/div/button").click();
         $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(5));
         $(".notification__content").shouldHave(Condition.text("Встреча успешно запланирована на " + dateMeetin));
-        dateMeetin = generateDate(5);
+        dateMeetin = DataGen.PersonGen.generateDate(5);
         $("input[type='tel']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME));
         $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
         $("input[type='tel']").setValue(dateMeetin);
