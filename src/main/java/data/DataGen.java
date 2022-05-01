@@ -1,3 +1,5 @@
+package data;
+
 import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
 
@@ -16,6 +18,7 @@ public class DataGen {
                     faker.name().fullName(),
                     faker.phoneNumber().phoneNumber());
         }
+
         public String generateDate(int days) {
             return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         }

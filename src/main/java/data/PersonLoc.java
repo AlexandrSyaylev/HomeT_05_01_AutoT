@@ -1,3 +1,5 @@
+package data;
+
 import lombok.Data;
 
 @Data
