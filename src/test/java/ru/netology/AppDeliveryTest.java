@@ -1,8 +1,8 @@
 package ru.netology;
 
 import com.codeborne.selenide.Condition;
-import data.DataGen;
-import data.PersonLoc;
+import ru.netology.data.DataGen;
+import ru.netology.data.PersonLoc;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
