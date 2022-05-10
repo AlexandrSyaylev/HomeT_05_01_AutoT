@@ -48,7 +48,7 @@ public class AppDeliveryTest {
         $("input[type='tel']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME));
         $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
         $("input[type='tel']").setValue(dateMeetin);
-        //$(withText("Запланировать")).click();
+        $(withText("Запланировать")).click();
         $(withText("Необходимо подтверждение")).shouldBe(visible);
         $(byText("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible);
         $(withText("Запланировать")).click();
